@@ -1,0 +1,12 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "refresh_token": "1000.42fe70201b8fc23bc358301e26be8dab.2218a011b1b9a2e9b4b990c9353f2028",
+    "client_id": "1000.A7P49ZB52BURL0G13EW7O48W2EQXMM",
+    "client_secret": "e10dd65a25956876b7f1b5dd0c59d79b7dd4400cf7",
+    "WEBSITE_ALWAYS_ON": "true",
+    "AzureWebJobsStorage": "DefaultEndpointsProtocol=https;AccountName=ccarbonproddata;AccountKey=O6wexAJd14tVX3lsvhXmB1Mgb92oRP1WDi2ModtmaQSNklxBo0A5+4qiXL+dOvKdG7Oa32SwacEl+ASt8pZvbg==;EndpointSuffix=core.windows.net",
+    "FUNCTIONS_WORKER_RUNTIME": "python",
+    "ccarbonproddata_STORAGE": "DefaultEndpointsProtocol=https;AccountName=ccarbonproddata;AccountKey=O6wexAJd14tVX3lsvhXmB1Mgb92oRP1WDi2ModtmaQSNklxBo0A5+4qiXL+dOvKdG7Oa32SwacEl+ASt8pZvbg==;EndpointSuffix=core.windows.net"
+  }
+}

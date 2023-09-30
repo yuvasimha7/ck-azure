@@ -1,0 +1,27 @@
+# DO NOT include azure-functions-worker in this file
+# The Python Worker is managed by Azure Functions platform
+# Manually managing azure-functions-worker may cause unexpected issues
+
+# Minimum packages for azure functions
+azure-functions
+azure-storage-blob
+azure-applicationinsights
+numpy
+opencv-python-headless
+pandas
+pillow
+requests
+scipy
+python-dateutil
+azure-storage-blob
+openpyxl
+requests-toolbelt
+msal
+PyPDF2
+selenium
+webdriver_manager
+tabula-py
+requests_html
+crochet
+scrapy
+pdfplumber
