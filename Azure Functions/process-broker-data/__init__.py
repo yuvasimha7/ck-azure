@@ -175,7 +175,7 @@ class Amerex:
         rggi_temp['Mid'] = rggi_temp['Mid'].astype(float, errors='ignore')
         rggi_temp['Offer'] = rggi_temp['Offer'].astype(float, errors='ignore')
         push_data2(commit_table['Amerex_RGGI'],rggi_temp,self.access_token)
-        #push_data('572329000055069753',rggi_temp,self.access_token)
+        
 
     def process_wca(self):
         if 'ICE/NODAL WCA' in str(self.df.loc[42,8]):
@@ -256,7 +256,7 @@ class Amerex:
         vc_temp['Mid'] = vc_temp['Mid'].astype(float, errors='ignore')
         vc_temp['Offer'] = vc_temp['Offer'].astype(float, errors='ignore')
         push_data2(commit_table['Amerex_voluntary_carbon'],vc_temp,self.access_token)
-        #push_data('572329000055559229',vc_temp,self.access_token)
+       
     
     def process_OR_LCFS(self):
         if 'OR PHYSICAL LCFS' in str(self.df.loc[33,2]):
@@ -306,7 +306,7 @@ class Amerex:
         d3rin_temp['Mid'] = d3rin_temp['Mid'].astype(float, errors='ignore')
         d3rin_temp['Offer'] = d3rin_temp['Offer'].astype(float, errors='ignore')
         push_data2(commit_table['Amerex_D3_RIN'],d3rin_temp,self.access_token)
-        #push_data('572329000055558703',d3rin_temp,self.access_token)
+      
 
 
 
@@ -415,10 +415,6 @@ class ICE:
         
 
         df = df[df.iloc[:, 0] == contract_name]
-
-        '''df = df.rename(columns={0: 'Contract Name', 1: 'delivery', 2: 'open', 3: 'high', 4: 'low', 5: 'close',
-                                6: 'settle_price', 7: 'settle_change', 8: 'total_volume', 9: 'OI', 10: 'OI_change',
-                                11: 'EFP', 12: 'EFS', 13: 'block_volume', 14: 'spread_volume'})'''
                                 
         new_column_names = ['Contract Name', 'delivery', 'open', 'high', 'low', 'close','settle_price', 
         'settle_change', 'total_volume', 'OI', 'OI_change','EFP', 'EFS', 'block_volume', 'spread_volume'
@@ -472,28 +468,6 @@ class EVOLUTION:
         df['date'] = date
         df.rename(columns={'PRODUCT': 'Contract', 'ASK PRICE': 'Ask','BID PRICE':'Bid' }, inplace=True)
         push_data2(commit_table['Evolution_CCO_link'], df, self.access_token)
-
-
-       
-
-'''def get_access_token():
-
-    # Create access token for the instance
-    request_url = 'https://accounts.zoho.com/oauth/v2/token'
-    query_params = {'refresh_token': os.environ.get('refresh_token'),
-                    'client_id': os.environ.get('client_id'),
-                    'client_secret': os.environ.get('client_secret'),
-                    'redirect_uri': 'https://api-console.zoho.com',
-                    'grant_type': 'refresh_token'}
-    
-    response = requests.post(request_url, data=query_params)
-    
-    if response.status_code != 200:
-        raise Exception('Failed to get access token')
-    
-    logging.info(print(response.json()))
-    access_token = response.json()['access_token']
-    return access_token'''
     
 
 
@@ -664,11 +638,6 @@ def save_archives(connection_string, container_name, file_name, data):
 
     # Create or overwrite the blob with the CSV data
     blob_client = container_client.get_blob_client(file_name)
-
-    '''if not data.exists():
-        print(f"Blob '{file_name}' does not exist.")
-        return'''
-
     blob_client.upload_blob(data, overwrite=True)
     
     
@@ -830,67 +799,6 @@ def main(myblob: func.InputStream):
    
         ice = ICE(result_df, access_token, blob_name)
         ice.ice_sheets()
-        
-        '''# Step 1: Open the PDF file using pdfplumber
-        with pdfplumber.open(tmp.name) as pdf:
-        # Step 2: Extract text from all pages
-            all_text = ""
-            for page in pdf.pages:
-                all_text += page.extract_text()
-
-        # Step 3: Create a list to store the extracted tables
-        tables = []
-
-        # Step 4: Split the text into lines and look for table-like structures
-        lines = all_text.split('\n')
-        current_table = []
-        in_table = False
-
-        for line in lines:
-            if line.strip() == "":
-                if in_table:
-                    tables.append(current_table)
-                    current_table = []
-                    in_table = False
-            else:
-                current_table.append(line)
-                in_table = True
-
-
-
-        dfs = []
-        for table in tables:
-            df = pd.read_csv(pd.compat.StringIO('\n'.join(table)), header=None)
-            dfs.append(df)
-
-        # Step 6: Perform further processing on the extracted tables (if needed)
-
-        # Step 7: Call the ICE class (assuming it's defined elsewhere)
-        ice = ICE(dfs, access_token, blob_name)
-        ice.ice_sheets()'''
-        
-        '''df = pd.concat(tables)
-
-        
-        
-
-        df = df[df.iloc[:, 0] == contract_name]
-
-        df = df.rename(columns={0: 'Contract Name', 1: 'delivery', 2: 'open', 3: 'high', 4: 'low', 5: 'close',
-                                6: 'settle_price', 7: 'settle_change', 8: 'total_volume', 9: 'OI', 10: 'OI_change',
-                                11: 'EFP', 12: 'EFS', 13: 'block_volume', 14: 'spread_volume'})
-
-        df = df.drop(['Contract Name', 'settle_change', 'EFP', 'EFS'], axis=1)
-        df['date'] = date
-        df['date'] = pd.to_datetime(date, format='%d-%m-%Y')
-        cols = list(df.columns)
-        cols.insert(0, cols.pop(cols.index('date')))
-        df = df[cols]
-
-        push_data2_fpc(commit_table[contract_name],df,access_token)'''
-        
-
-        
         
         source_file_name = blob_name.split('/')[1]
         source_container_name = blob_name.split('/')[0]
